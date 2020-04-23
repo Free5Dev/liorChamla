@@ -9,6 +9,7 @@ class HomeController extends AbstractController {
 
     /**
      * @Route("/home", name="homepage")
+     * @Route("/", name="homepage")
      *
      * @return void
      */

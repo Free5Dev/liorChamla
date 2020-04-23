@@ -47,6 +47,7 @@ class AdController extends AbstractController
                $image->setAd($ad);
                $entityManager->persist($image);
            }
+           $ad->setAuthor($this->getUser());
            $entityManager->persist($ad);
            $entityManager->flush();
            //Les messages flash
