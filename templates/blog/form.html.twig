@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %} Form Article {% endblock %}
+
+{% block body %}
+    <h1>Form de
+    {% if edit_mod %} 
+        modification d'un
+    {% else %}
+        Création d'un
+    {% endif %}
+     article</h1>
+    {{ form_start(form) }}
+    {{form_row(form.title, {
+        'label': "Titre",
+        'attr': {
+            'placeholder': 'Titre de l\'article'
+        }
+    }) }}
+    {{form_row(form.image, {
+        'label': "Url de l'image",
+        'attr': {
+            'placeholder': 'htpp://placehold.it/350x150'
+        }
+    }) }}
+    {{form_row(form.category)}}
+    {{form_row(form.content, {
+        'label': "Contenu",
+        'attr': {
+            'placeholder': 'Contenu de l\'article'
+        }
+    }) }}
+    <button type="submit" class="btn btn-primary">
+    {% if edit_mod %}
+          Modification d'article      
+    {% else %}
+         Ajouté article
+    {% endif %}
+    </button>
+    {{ form_end(form) }}
+    <br>
+
+{% endblock %}

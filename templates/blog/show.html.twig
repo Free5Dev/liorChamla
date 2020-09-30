@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{% block title %} {{ article.title }} {% endblock %}
+
+{% block body %}
+    <article>
+        <h1>{{article.title}}</h1>
+        <span class="text-small">Ecrit le {{article.createdAt|date('d/m/Y à H:i')}} dans la categorie <mark>{{ article.category.title  }}</mark></span>
+        <p><img src="{{article.image}}" alt="{{article.title}}"></p>
+        {{article.content|raw}}
+        <hr>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dignissimos quibusdam soluta quo cupiditate vitae asperiores voluptate eligendi numquam inventore ullam perspiciatis possimus maiores reprehenderit facere, sit, est dolorem atque expedita. Omnis, quisquam iusto maxime officia explicabo totam dolor qui praesentium.</p>
+        <p>Repudiandae maiores, dolorem facere voluptatum sit, corporis et hic quis perferendis expedita suscipit quos ullam earum veritatis totam? Perferendis est vitae asperiores tempora animi iure, repellat quidem saepe? Fuga eius quaerat atque dignissimos? Totam non magni nihil, porro deleniti tempora.</p>
+    </article>
+    <h2>Commentaire(s) : {{ article.comments | length }}</h2>
+    {% set comment = article.comments %}
+    {% for comment in article.comments %}
+        <div class="row">
+            <div class="col-3">
+                Auteur: {{comment.author}} écrit le <small>{{ comment.createdAt | date('d/m/Y à H:i')}}</small>
+            </div>
+            <div class="col">
+                {{ comment.content | raw }}
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+    {% if app.user %}
+        {{ form_start(form)}}
+        {{form_row(form.author, {
+            'label': "Auteur",
+            'attr': {
+                'placeholder': "Votre nom"
+            } 
+        })}}
+        {{form_row(form.content, {
+            'label': "Commentaire",
+            'attr': {
+                'placeholder': "Votre commentaire"
+            } 
+        })}}
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        {{ form_end(form) }}
+    {% else %}
+        <p>Impossible de commenter <a href="{{ path('security_login') }}" class="btn btn-success">Connecter vous ici</a></p>
+    {% endif %}
+    <br>
+{% endblock %}
